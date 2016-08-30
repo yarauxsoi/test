@@ -1,0 +1,10 @@
+body {
+    background: lightgray;
+}
+a {
+    color: yellowgreen;
+    border: 1px solid gray;
+}
+ul {
+    list-style-type: armenian;
+}
