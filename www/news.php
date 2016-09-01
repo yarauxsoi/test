@@ -1,7 +1,8 @@
 <?php
 require __DIR__ . '/functions/sql.php';
 require __DIR__ . '/classes/Database.php';
-$get = new Database();
-$new = $get->news_get_single($_GET['id']);
+require __DIR__ . '/classes/News.php';
+$article = new News($_GET['id']);
+$new = $article->get_article();
 include __DIR__ . '/view/news.php';
 ?>

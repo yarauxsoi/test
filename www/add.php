@@ -11,8 +11,7 @@ if (!empty($_POST)) {
     }
     if (isset($news['header']) && isset($news['content'])) {
         $news['date'] = date('j.m.Y');
-        $add = new Database();
-        $add->news_add($news);
+        Database::news_add($news);
         header('Location: /index.php');
     }
 }

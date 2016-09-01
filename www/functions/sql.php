@@ -4,6 +4,7 @@ function sql_connect() {
     mysql_select_db('test');
 }
 function sql_exec($sql) {
+    sql_connect();
     mysql_query($sql);
     if(mysql_error()) {
         return false;
@@ -12,6 +13,7 @@ function sql_exec($sql) {
     }
 }
 function sql_query($sql) {
+    sql_connect();
     $res = mysql_query($sql);
     $query_res = [];
     while (false !== $row = mysql_fetch_assoc($res)) {

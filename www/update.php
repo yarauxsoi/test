@@ -18,7 +18,6 @@ if (!empty($_POST)) {
         header('Location: /index.php');
     }
 }
-$update = new Database();
-$titles = $update->news_get_titles();
+$titles = Database::news_get_titles();
 include __DIR__ . '/view/update.php';
 ?>

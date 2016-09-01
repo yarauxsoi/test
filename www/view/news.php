@@ -11,9 +11,9 @@
 </head
 <body>
     <div>
-        <p id="date"><?=$new[0]['date']?></p>
-        <h1><?=$new[0]['title']?></h1>
-        <p><?=$new[0]['content']?></p>
+        <p id="date"><?=$new['date']?></p>
+        <h1><?=$new['title']?></h1>
+        <p><?=$new['content']?></p>
         <a href="/index.php">На главную</a>
     </div>
 </body>
