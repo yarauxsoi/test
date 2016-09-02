@@ -1,34 +1,27 @@
 <?php
 class Database {
-    public static function news_add($news) {
-        $sql = "INSERT INTO news (title, content, date) VALUES ('" . $news['header'] . "', '" . $news['content'] . "', '" . $news['date'] . "')";
-        return sql_exec($sql);
+    public function __construct() {
+        mysql_connect('localhost', 'root', '');
+        mysql_select_db('test');
     }
-    public static function news_get() {
-        $sql = "SELECT * FROM news";
-        if ($res = sql_query($sql)) {
-            usort($res, 'self::news_sort');
-            return $res;
+    public static function sql_exec($sql) {
+        mysql_query($sql);
+        if(mysql_error()) {
+            return false;
+        }else{
+            return true;
         }
-        return false;
     }
-    public static function news_get_single($id) {
-        $sql = "SELECT title, content, date FROM news WHERE id=" . $id;
-        $res = sql_query($sql);
-        return $res[0];
-    }
-    public static function news_get_titles() {
-        $sql = "SELECT id, title FROM news";
-        return sql_query($sql);
-    }
-    public static function news_update($news) {
-        $sql = "UPDATE news SET title='" . $news['header'] . "', content='" . $news['content'] . "' WHERE id=" . $news['id'];
-        return sql_exec($sql);
-    }
-    public static function news_sort($a, $b) {
-        $t1 = strtotime($a['date']);
-        $t2 = strtotime($b['date']);
-        return $t2-$t1;
+    public static function sql_query($sql) {
+        $res = mysql_query($sql);
+        if(false === $res) {
+            return false;
+        }
+        $query_res = [];
+        while (false !== $row = mysql_fetch_assoc($res)) {
+            $query_res[] = $row;
+        }
+        return $query_res;
     }
 }
 ?>

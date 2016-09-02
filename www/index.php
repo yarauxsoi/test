@@ -1,6 +1,9 @@
 <?php
-require __DIR__ . '/functions/sql.php';
-require __DIR__ . '/classes/Database.php';
-$news = Database::news_get();
-include __DIR__ . '/view/index.php';
+require __DIR__ . '/autoload.php';
+$ctrl = isset($_GET['ctrl']) ? $_GET['ctrl'] : 'News';
+$act = isset($_GET['act']) ? $_GET['act'] : 'All';
+$ctrlName = $ctrl . 'Controller';
+$controller = new $ctrlName;
+$actName = 'action' . $act;
+$controller->$actName();
 ?>

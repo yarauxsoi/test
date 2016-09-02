@@ -5,7 +5,7 @@
 </head
 <body>
     <h2>Добавить новость:</h2>
-    <form action="/add.php" method="post">
+    <form action="/index.php?ctrl=News&act=Add" method="post">
         <label for="header">Заголовок: </label>
         <input type="text" name="header" id="header"><br><br>
         <label for="content">Содержание: </label><br>

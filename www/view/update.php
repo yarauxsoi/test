@@ -5,7 +5,7 @@
 </head
 <body>
     <h2>Редактировать новость:</h2>
-    <form action="/update.php" method="post">
+    <form action="/index.php?ctrl=News&act=Update" method="post">
         <label for="list">Выберите новость для изменения: </label>
         <select id="list" name="id">
             <?php foreach ($titles as $t): ?>
