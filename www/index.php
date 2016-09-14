@@ -1,5 +1,10 @@
 <?php
-var_dump($_SERVER);
+require __DIR__ . '/autoload.php';
+use App\controllers\NewsController;
+use App\controllers\AdminController;
+use App\classes\Logs;
+use App\classes\View;
+use App\classes\E404Exception;
 if ($_SERVER['REQUEST_URI'] != '/' && $_SERVER['REQUEST_URI'] != '/index.php') {
     $uri_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $uri_list = explode('/', trim($uri_path, '/'));
@@ -12,12 +17,24 @@ if ($_SERVER['REQUEST_URI'] != '/' && $_SERVER['REQUEST_URI'] != '/index.php') {
         $_GET[$uri_list[$i]] = $uri_list[++$i];
     }
 }
-var_dump($uri_list);
-require __DIR__ . '/autoload.php';
-$ctrl = isset($_GET['ctrl']) ? $_GET['ctrl'] : 'News';
-$act = isset($_GET['act']) ? $_GET['act'] : 'All';
-$ctrlName = $ctrl . 'Controller';
-$controller = new $ctrlName;
-$actName = 'action' . $act;
-$controller->$actName();
+$ctrl = 'App\\controllers\\' . (isset($_GET['ctrl']) ? $_GET['ctrl'] : 'News') . 'Controller';
+$act = 'action' . (isset($_GET['act']) ? $_GET['act'] : 'All');
+try {
+    $controller = new $ctrl;
+    $controller->$act();
+}
+catch (Exception $x) {
+    switch ($x->getCode()) {
+        case 404:
+            header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
+            break;
+        default:
+            header($_SERVER['SERVER_PROTOCOL'] . ' 403');
+    }
+    $loader = new Twig_Loader_Filesystem(__DIR__ . '/view');
+    $twig = new Twig_Environment($loader, []);
+    $twig->display('error.php', ['code' => $x->getCode(),                                                   'error' => $x->getMessage()]);
+    $log = new Logs($x);
+    $log->insert();
+}
 ?>

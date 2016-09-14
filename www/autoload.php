@@ -1,11 +1,12 @@
 <?php
-function __autoload($class) {
-    if(file_exists(__DIR__ . '/classes/' . $class . '.php')) {
-        require_once __DIR__ . '/classes/' . $class . '.php';
-    }elseif (file_exists(__DIR__ . '/controllers/' . $class . '.php')) {
-        require_once __DIR__ . '/controllers/' . $class . '.php';
-    }elseif (file_exists(__DIR__ . '/models/' . $class . '.php')) {
-        require_once __DIR__ . '/models/' . $class . '.php';
+function my_autoload($class) {
+    $class_parts = explode('\\', $class);
+    $class_parts[0] = __DIR__;
+    $class_path = implode(DIRECTORY_SEPARATOR, $class_parts) . '.php';
+    if (file_exists($class_path)) {
+        require_once($class_path);
     }
 }
+spl_autoload_register('my_autoload');
+require __DIR__ . '/vendor/autoload.php';
 ?>

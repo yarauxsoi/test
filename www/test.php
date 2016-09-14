@@ -1,13 +1,4 @@
 <?php
-class first {
-    public $val = '654345';
-}
-class second {
-    public $money;
-    public function __construct () {
-        $this->money = new first();
-    }
-}
-$variable = new second();
-echo $variable->money->val;
+echo function_exists('proc_open') ? "Yep,
+    that will work" : "Sorry, that won't work";
 ?>

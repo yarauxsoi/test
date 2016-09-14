@@ -15,7 +15,7 @@
         <p id="date"><?=$n['date']?></p>
         <h1><?=$n['title']?></h1>
         <p><?=substr($n['content'], 0, 50)?></p>
-        <a href="/index.php?ctrl=News&act=One&id=<?=$n['id']?>">Читать далее</a>
+        <a href="/News/One/id/<?=$n['id']?>">Читать далее</a>
     </div>
     <?php endforeach; ?>
 </body>

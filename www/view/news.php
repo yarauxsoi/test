@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title><?=$new[0]['title']?></title>
+    <title><?=$items['title']?></title>
     <meta charset="utf-8">
     <style>
         p#date {
@@ -11,9 +11,9 @@
 </head
 <body>
     <div>
-        <p id="date"><?=$new['date']?></p>
-        <h1><?=$new['title']?></h1>
-        <p><?=$new['content']?></p>
+        <p id="date"><?=$items['date']?></p>
+        <h1><?=$items['title']?></h1>
+        <p><?=$items['content']?></p>
         <a href="/index.php">На главную</a>
     </div>
 </body>

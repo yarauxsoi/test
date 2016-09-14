@@ -1,27 +1,32 @@
 <?php
+namespace App\classes;
+use PDO;
 class Database {
+    private $dbh;
+    private $className;
     public function __construct() {
-        mysql_connect('localhost', 'root', '');
-        mysql_select_db('test');
+        $ds = 'mysql:dbname=test;host=localhost';
+        $this->dbh = new PDO($ds, 'root', '', [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
     }
-    public static function sql_exec($sql) {
-        mysql_query($sql);
-        if(mysql_error()) {
+    public function setClassName($class) {
+        $this->className = $class;
+    }
+    public function lastInsertId() {
+        return $this->dbh->lastInsertId();
+    }
+    public function query($sql, $params = []) {
+        $sth = $this->dbh->prepare($sql);
+        $sth->execute($params);
+        return $sth->fetchAll();
+    }
+    public function execute($sql) {
+        $sth = $this->dbh->prepare($sql);
+        $sth->execute();
+        if('00000' !== $sth->errorCode()) {
             return false;
         }else{
             return true;
         }
-    }
-    public static function sql_query($sql) {
-        $res = mysql_query($sql);
-        if(false === $res) {
-            return false;
-        }
-        $query_res = [];
-        while (false !== $row = mysql_fetch_assoc($res)) {
-            $query_res[] = $row;
-        }
-        return $query_res;
     }
 }
 ?>
