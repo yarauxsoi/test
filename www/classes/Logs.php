@@ -14,7 +14,7 @@ class Logs {
     public function insert() {
         return error_log(date('[H:i:s j.m.Y] ') . $this->message . "\n", 3, __DIR__ . '/../logs/logs.txt');
     }
-    public static function send() {
+    public static function sendMail() {
         $transport = \Swift_SmtpTransport::newInstance('aspmx.l.google.com', 25);
         $transport->setUsername('shadoff1@gmail.com');
         $transport->setPassword('morkovka');
